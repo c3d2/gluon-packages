@@ -1,0 +1,49 @@
+#!/usr/bin/lua
+
+local uci = require('luci.model.uci').cursor()
+
+
+function popen(command)
+  local p = io.popen(command)
+  local r = p:read('*all')
+  p:close()
+  return r
+end
+
+
+local function ddmesh_register(key)
+  print("Key: " .. key)
+  local res = popen(string.format('wget -T 120 -O- "http://register.ddmesh.de/bot.php?registerkey=%s"', key))
+  local number = res:match('OK:(%d+)')
+  if number then
+    return number
+  else
+    error('Register response: ' .. res)
+  end
+end
+
+
+function get_key1()
+  local res = popen("dropbearkey -y -f /etc/dropbear/dropbear_rsa_host_key | sed -n '/Fingerprint/{s#.* \([a-f0-9:]\+\)#\1#;p}'")
+  local fp = res:match('^Fingerprint:%s*%w+%s+(.+)\n')
+  if fp then
+    return fp
+  else
+    error('No dropbear fingerprint in: ' .. res)
+  end
+end
+
+
+function get_key2()
+  local output = popen("ip link | grep ether | md5sum | cut -d' ' -f1 | sed 's#\\(..\\)#\\1:#g'")
+  return string.gsub(output, ':\n', '')
+end
+
+if not uci:get('ddmesh', 'system', 'node') then
+  local node = ddmesh_register(get_key1() .. ':' .. get_key2())
+  io.stderr:write('Registered with DDMesh, node=', node)
+  uci:set('ddmesh', 'system', 'node', node)
+
+  uci:save('ddmesh')
+  uci:commit('ddmesh')
+end
