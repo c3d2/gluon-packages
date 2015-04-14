@@ -17,4 +17,4 @@ io.stderr:write("Setting bmxd interfaces: ", table.concat(interfaces, ' '))
 uci:set('bmxd', 'general', 'interface', table.concat(interfaces, ' '))
 uci:save('bmxd')
 
-os.execute("/etc/init.d/bmxd restart")
+os.execute("/etc/init.d/bmxd stop; sleep 1; /etc/init.d/bmxd start")
