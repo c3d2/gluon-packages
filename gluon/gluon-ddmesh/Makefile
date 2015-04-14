@@ -12,7 +12,7 @@ define Package/gluon-ddmesh
   SECTION:=gluon
   CATEGORY:=Gluon
   TITLE:=DDMesh cruft
-  DEPENDS:=+wget
+  DEPENDS:=+wget +bmxd
 endef
 
 

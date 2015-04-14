@@ -1,0 +1,12 @@
+#!/bin/sh
+
+[ "$ACTION" = ifup ] || exit 0
+
+MODE=$(uci get wireless.$INTERFACE.mode)
+[ "$MODE" = adhoc ] || exit 0
+
+MIDDLE=$(uci get ddmesh.system.node_middle)
+MINOR=$(uci get ddmesh.system.node_minor)
+ip addr add 10.200.$MIDDLE.$MINOR/16 dev $DEVICE brd 10.255.255.255
+
+

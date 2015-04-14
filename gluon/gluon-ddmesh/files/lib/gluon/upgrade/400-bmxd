@@ -1,0 +1,20 @@
+#!/usr/bin/lua
+
+local uci = require('luci.model.uci').cursor()
+
+local interfaces = {}
+uci:foreach('wireless', 'wifi-iface',
+            function(s)
+              local mode = uci:get('wireless', s['.name'], 'mode')
+              if mode == 'adhoc' then
+                local ifname = uci:get('wireless', s['.name'], 'ifname')
+                table.insert(interfaces, ifname)
+              end
+            end
+)
+
+io.stderr:write("Setting bmxd interfaces: ", table.concat(interfaces, ' '))
+uci:set('bmxd', 'general', 'interface', table.concat(interfaces, ' '))
+uci:save('bmxd')
+
+os.execute("/etc/init.d/bmxd restart")

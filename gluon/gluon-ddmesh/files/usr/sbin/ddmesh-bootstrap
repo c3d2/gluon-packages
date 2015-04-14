@@ -13,7 +13,7 @@ end
 
 local function ddmesh_register(key)
   print("Key: " .. key)
-  local res = popen(string.format('wget -T 120 -O- "http://register.ddmesh.de/bot.php?registerkey=%s"', key))
+  local res = popen(string.format('wget -T 30 -O- "http://register.ddmesh.de/bot.php?registerkey=%s"', key))
   local number = res:match('OK:(%d+)')
   if number then
     return number
@@ -44,6 +44,14 @@ if not uci:get('ddmesh', 'system', 'node') then
   io.stderr:write('Registered with DDMesh, node=', node)
   uci:set('ddmesh', 'system', 'node', node)
 
+  local middle = math.floor(node / 255) % 256
+  local minor = (node % 255) + 1
+  uci:set('ddmesh', 'system', 'node_middle', middle)
+  uci:set('ddmesh', 'system', 'node_minor', minor)
+
   uci:save('ddmesh')
   uci:commit('ddmesh')
+else
+  -- rm cronjob
+  os.remove('/lib/gluon/cron/ddmesh-bootstrap')
 end
