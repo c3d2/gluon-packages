@@ -51,6 +51,8 @@ if not uci:get('ddmesh', 'system', 'node') then
 
   uci:save('ddmesh')
   uci:commit('ddmesh')
+
+  os.execute('lua /lib/gluon/upgrade/400-bmxd')
 else
   -- rm cronjob
   os.remove('/lib/gluon/cron/ddmesh-bootstrap')

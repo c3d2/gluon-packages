@@ -45,7 +45,7 @@ start () {
 }
 
 stop () {
-	killall bmxd
+	start-stop-daemon -K -p /var/run/bmx/pid
 }
 
 restart () {
