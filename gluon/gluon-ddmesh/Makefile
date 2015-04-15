@@ -16,7 +16,7 @@ define Package/gluon-ddmesh
 endef
 
 
-define Package/gluon-core/description
+define Package/gluon-ddmesh/description
 	Support for Freifunk Dresden
 endef
 
