@@ -1,0 +1,27 @@
+#!/bin/sh /etc/rc.common
+START=99
+. /lib/config/uci.sh
+config_load ddmesh-backbone
+
+start_client () {
+    local config="$1"
+    config_get CONF "$config" config
+    config_get HOST "$config" host
+    config_get PORT "$config" port
+    config_get PROFILE "$config" profile
+    vtund -f $CONF -P $PORT $PROFILE $HOST
+}
+
+start () {
+    config_foreach start_client backbone_client 
+}
+
+stop () {
+    killall vtund
+}
+
+restart () {
+	stop
+	sleep 1
+	start
+}
