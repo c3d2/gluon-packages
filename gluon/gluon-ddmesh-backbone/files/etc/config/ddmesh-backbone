@@ -1,8 +1,8 @@
 config backbone_client 'ddmesh1'
-	option host 'vpn1.freifunk-dresden.de'
+	option host 'vpn2.freifunk-dresden.de'
 	option port '5000'
         option config '/etc/vtun/backbone1.conf'
-        option profile 'backbone1'
+        option profile 'backbone2-r1119'
 
 # config backbone_client 'ddmesh2'
 # 	option host 'vpn2.freifunk-dresden.de'

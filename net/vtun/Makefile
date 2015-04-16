@@ -39,7 +39,7 @@ config VTUN_config
 		bool "enable vtun compression"
 		help
 			vtun tunnels will be compressed
-		default y
+		default n
 
 	config VTUN_SSL
 		bool "enable vtun ssl encryption"

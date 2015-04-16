@@ -12,7 +12,7 @@ define Package/gluon-ddmesh-backbone
   SECTION:=gluon
   CATEGORY:=Gluon
   TITLE:=DDMesh backbone cruft
-  DEPENDS:=+vtun
+  DEPENDS:=+vtun @VTUN_SSL
 endef
 
 
