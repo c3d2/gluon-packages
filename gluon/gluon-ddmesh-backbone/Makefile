@@ -12,9 +12,8 @@ define Package/gluon-ddmesh-backbone
   SECTION:=gluon
   CATEGORY:=Gluon
   TITLE:=DDMesh backbone cruft
-  DEPENDS:=+vtun @VTUN_SSL
+  DEPENDS:=+vtun
 endef
-
 
 define Package/gluon-ddmesh-backbone/description
 	Support for Freifunk Dresden Backbone

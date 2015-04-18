@@ -45,7 +45,7 @@ config VTUN_config
 		bool "enable vtun ssl encryption"
 		help
 			vtun tunnels will be encrypted
-		default n
+		default y
 endmenu
 endef
 
